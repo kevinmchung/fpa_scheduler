@@ -6,7 +6,7 @@ from django.views import generic
 
 
 class IndexView(generic.ListView):
-    template_name = 'scheduler\index.html'
+    template_name = 'scheduler/index.html'
 
     def get_queryset(self):
         return 0

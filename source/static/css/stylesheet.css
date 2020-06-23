@@ -1,0 +1,53 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald&display=swap');
+
+body {
+
+  font-size: 12pt;
+  font-family: 'Oswald', sans-serif;"
+  color: black;
+
+  padding-left: 5pt;
+  padding-right: 5pt;
+  padding-top: 0pt;
+
+}
+
+
+h1 {
+
+  font: 20pt 'Oswald', sans-serif;
+  font-weight: bold;
+
+}
+
+
+
+img {
+
+  padding: 2pt;
+  float: right;
+
+}
+
+
+a {
+
+  text-decoration: none;
+
+}
+
+
+a:link, a:visited {
+
+  color: #8094d6;
+
+}
+
+
+a:hover, a:active {
+
+  color: #FF9933;
+
+}
+
+

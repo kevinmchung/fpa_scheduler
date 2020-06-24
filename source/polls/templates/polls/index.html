@@ -1,10 +1,10 @@
-{% extends "scheduler/base.html" %}
-
-{% block title %}Polls{% endblock %}
+{% extends "polls/base.html" %}
 
 {% block content %}
 
     <h1>Polls</h1>
+
+    <p>Questions (use the admin portal to add more questions)</p>
 
     {% if latest_question_list %}
         <ul>

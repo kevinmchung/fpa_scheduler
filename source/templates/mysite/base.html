@@ -1,3 +1,5 @@
+{% load static %}
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -7,10 +9,11 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-    <!--<link href="/docs/4.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">-->
-    <link href="starter-template.css" rel="stylesheet">
 
-    <title>{% block title %}FPA Scheduler{% endblock %}</title>
+    <!-- Application CSS -->
+    {% block style %}{% endblock %}
+
+    <title>{% block title %}{% endblock %}</title>
 
   </head>
   <body>
@@ -25,6 +28,7 @@
       <div class="starter-template">
         {% block content %}Content{% endblock %}
       </div>
+
     </main>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

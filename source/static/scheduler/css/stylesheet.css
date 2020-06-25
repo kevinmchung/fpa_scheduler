@@ -1,9 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Oswald&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap');
 
 body {
 
+  padding-top: 5rem;
   font-size: 12pt;
-  font-family: 'Oswald', sans-serif;"
+  font-family: 'Noto Sans JP', sans-serif;"
   color: black;
 
   padding-left: 5pt;
@@ -15,7 +16,7 @@ body {
 
 h1 {
 
-  font: 20pt 'Oswald', sans-serif;
+  font: 20pt 'Noto Sans JP', sans-serif;
   font-weight: bold;
 
 }
@@ -49,5 +50,6 @@ a:hover, a:active {
   color: #FF9933;
 
 }
+
 
 

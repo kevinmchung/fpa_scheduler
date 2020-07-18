@@ -10,6 +10,17 @@
     <h1>Scheduler - List</h1>
 
 
+    {% if names_list %}
+        <ul>
+        {% for name in names_list %}
+            <li>{{ name }}</li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No names in list.</p>
+    {% endif %}
+
+
     <br>
 
     <form action="/your-name/" method="post">

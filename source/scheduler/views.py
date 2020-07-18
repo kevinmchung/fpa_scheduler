@@ -4,6 +4,8 @@ from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.views import generic
 
+from .models import Name
+
 
 class IndexView(generic.ListView):
     template_name = 'scheduler/index.html'
@@ -12,8 +14,12 @@ class IndexView(generic.ListView):
         return 0
 
 
+
 class ListView(generic.ListView):
     template_name = 'scheduler/list.html'
+    context_object_name = 'names_list'
 
     def get_queryset(self):
-        return 0
+        return Name.objects.order_by('name_last')
+
+

@@ -1,0 +1,23 @@
+{% extends "scheduler/base.html" %}
+
+{% block breadcrumb_page %}
+    <li class="breadcrumb-item active" aria-current="page">List</li>
+{% endblock %}
+
+
+{% block content %}
+
+    <h1>Scheduler - List</h1>
+
+
+    <br>
+
+    <form action="/your-name/" method="post">
+        <div class="form-group">
+            <label for="new_name">New name:</label>
+            <input class="form-control" id="new_name" type="text" name="new_name" value="{{ current_name }}">
+        </div>
+        <input class="btn btn-primary" type="submit" value="OK">
+    </form>
+
+{% endblock %}

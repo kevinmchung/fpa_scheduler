@@ -1,7 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap');
 
 body {
-
   padding-top: 5rem;
   font-size: 12pt;
   font-family: 'Noto Sans JP', sans-serif;"
@@ -10,46 +9,39 @@ body {
   padding-left: 5pt;
   padding-right: 5pt;
   padding-top: 0pt;
-
 }
 
 
 h1 {
-
-  font: 20pt 'Noto Sans JP', sans-serif;
+  font: 26pt 'Noto Sans JP', sans-serif;
   font-weight: bold;
-
 }
 
 
 
 img {
-
   padding: 2pt;
   float: right;
-
 }
 
 
 a {
-
   text-decoration: none;
-
 }
 
 
 a:link, a:visited {
-
   color: #8094d6;
-
 }
 
 
 a:hover, a:active {
-
   color: #FF9933;
-
 }
 
 
+.breadcrumb {
+    padding: 6px 10px !important;
+    font-size: 10pt;
+}
 

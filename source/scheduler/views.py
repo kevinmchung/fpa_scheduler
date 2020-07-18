@@ -11,3 +11,9 @@ class IndexView(generic.ListView):
     def get_queryset(self):
         return 0
 
+
+class ListView(generic.ListView):
+    template_name = 'scheduler/list.html'
+
+    def get_queryset(self):
+        return 0

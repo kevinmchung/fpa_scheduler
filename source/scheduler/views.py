@@ -15,8 +15,8 @@ class IndexView(generic.ListView):
 
 
 
-class ListView(generic.ListView):
-    template_name = 'scheduler/list.html'
+class NamesView(generic.ListView):
+    template_name = 'scheduler/names.html'
     context_object_name = 'names_list'
 
     def get_queryset(self):

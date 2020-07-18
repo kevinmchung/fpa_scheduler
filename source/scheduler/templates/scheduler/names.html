@@ -1,0 +1,37 @@
+{% extends "scheduler/base.html" %}
+
+{% block breadcrumb_page %}
+    <li class="breadcrumb-item active" aria-current="page">List</li>
+{% endblock %}
+
+
+{% block content %}
+
+    <h1>Names</h1>
+
+    {% if names_list %}
+
+   <ul class="list-group">
+        {% for name in names_list %}
+            <li class="list-group-item">{{ name }}</li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No names in list.</p>
+    {% endif %}
+
+    <br>
+    <br>
+
+    <form action="add/" method="post">
+        <h5>Add a New Name</h5>
+        <div class="form-group">
+            <label for="new_name_first">First:</label>
+            <input class="form-control" id="new_name_first" type="text" name="new_name_first" value="">
+            <label for="new_name_last">Last:</label>
+            <input class="form-control" id="new_name_last" type="text" name="new_name_last" value="">
+        </div>
+        <input class="btn btn-primary" type="submit" value="Add">
+    </form>
+
+{% endblock %}

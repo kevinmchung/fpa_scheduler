@@ -9,3 +9,6 @@ class Name(models.Model):
 
     def __str__(self):
         return "{} {}".format(self.name_first, self.name_last)
+
+    def get_absolute_url(self):
+        return reverse('name-detail', kwargs={'pk': self.pk})

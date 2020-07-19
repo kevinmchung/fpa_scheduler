@@ -24,6 +24,7 @@ from django.urls import re_path
 
 urlpatterns = [
     path('', views.IndexView.as_view(), name='index'),
+    path('names/', include('names.urls')),
     path('scheduler/', include('scheduler.urls')),
     path('polls/', include('polls.urls')),
     path('admin/', admin.site.urls),

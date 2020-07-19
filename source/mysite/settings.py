@@ -36,6 +36,7 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    'names.apps.NamesConfig',
     'scheduler.apps.SchedulerConfig',
     'polls.apps.PollsConfig',
     'django.contrib.admin',

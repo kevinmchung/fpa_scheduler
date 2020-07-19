@@ -23,14 +23,9 @@
     <br>
     <br>
 
-    <form action="add/" method="post">
-        <h5>Add a New Name</h5>
-        <div class="form-group">
-            <label for="new_name_first">First:</label>
-            <input class="form-control" id="new_name_first" type="text" name="new_name_first" value="">
-            <label for="new_name_last">Last:</label>
-            <input class="form-control" id="new_name_last" type="text" name="new_name_last" value="">
-        </div>
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ form }}
         <input class="btn btn-primary" type="submit" value="Add">
     </form>
 

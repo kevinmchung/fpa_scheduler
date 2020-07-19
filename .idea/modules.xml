@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/../PycharmProjects/FPAScheduling/.idea/FPAScheduling.iml" filepath="$PROJECT_DIR$/../PycharmProjects/FPAScheduling/.idea/FPAScheduling.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/fpa_scheduler.iml" filepath="$PROJECT_DIR$/.idea/fpa_scheduler.iml" />
     </modules>
   </component>

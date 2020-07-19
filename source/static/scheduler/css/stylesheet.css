@@ -17,7 +17,10 @@ h1 {
   font-weight: bold;
 }
 
-
+h3 {
+  font: 12pt 'Noto Sans JP', sans-serif;
+  font-weight: bold;
+}
 
 img {
   padding: 2pt;

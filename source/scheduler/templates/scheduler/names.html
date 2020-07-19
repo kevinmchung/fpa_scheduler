@@ -11,11 +11,16 @@
 
     {% if names_list %}
 
-   <ul class="list-group">
+    <table class="table">
         {% for name in names_list %}
-            <li class="list-group-item">{{ name }}</li>
+            <tr>
+                <td>{{ name }}</td>
+                <td><a href="{% url 'scheduler:namesdetail' name.id %}">edit</a></td>
+            </tr>
         {% endfor %}
         </ul>
+
+    </table>
     {% else %}
         <p>No names in list.</p>
     {% endif %}
@@ -23,10 +28,20 @@
     <br>
     <br>
 
-    <form action="" method="post">
-        {% csrf_token %}
-        {{ form }}
-        <input class="btn btn-primary" type="submit" value="Add">
-    </form>
+    <p>
+    <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+    Add a Name
+    </a>
+    </p>
+    <div class="collapse" id="collapseExample">
+      <div class="card card-body">
+          <h3>Add a Name</h3><br>
+          <form action="" method="post">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <input class="btn btn-primary" type="submit" value="Add">
+          </form>
+      </div>
+    </div>
 
 {% endblock %}

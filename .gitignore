@@ -6,3 +6,12 @@
 cloud_sql_proxy
 source/.DS_Store
 *.pyc
+venv/pyvenv.cfg
+venv/pyvenv.cfg
+venv/Scripts/activate
+venv/Scripts/Activate.ps1
+venv/Scripts/deactivate.bat
+venv/Scripts/python.exe
+venv/Scripts/pythonw.exe
+.idea/fpa_scheduler.iml
+.idea/misc.xml

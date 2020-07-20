@@ -16,7 +16,7 @@
             <tr>
                 <td>{{ name }}</td>
                 <td align="right"><a href="{% url 'names:update' name.id %}"><img alt="edit" src="{% static 'scheduler/img/pencil.png' %}" width=25" height="25">Edit</a></td>
-                <td align="right"><a href="{% url 'names:delete' name.id %}"><img alt="delete" src="{% static 'scheduler/img/trash.png' %}" width=25" height="25">Delete</a></td>
+                <td align="right"><a href="{% url 'names:delete' name.id %}"><img alt="delete" src="{% static 'scheduler/img/trash.png' %}" width=22" height="22">Delete</a></td>
             </tr>
         {% endfor %}
         </ul>

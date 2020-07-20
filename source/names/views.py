@@ -41,7 +41,6 @@ class NameUpdateView(generic.UpdateView):
 class NameDeleteView(generic.DeleteView):
     model = Name
     template_name = 'names/delete.html'
-    #success_url = reverse_lazy('names:index')
     success_url = reverse_lazy('names:index')
 
 

@@ -9,8 +9,10 @@
     <h1>Delete Name</h1>
     <br>
     <form method="post">{% csrf_token %}
-    <p>Are you sure you want to delete "{{ object }}"?</p>
-    <input type="submit" value="Confirm">
+        <p>Are you sure you want to delete?</p>
+        <h3>{{ object }}</h3>
+        <br>
+    <input type="submit" value="Confirm Delete">
     </form>
     <br>
     <a href="/names"}>Back to Names List</a>

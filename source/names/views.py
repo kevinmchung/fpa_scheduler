@@ -32,18 +32,18 @@ class NameDetailView(generic.DetailView):
     template_name = 'names/detail.html'
 
 
-
 class NameUpdateView(generic.UpdateView):
     model = Name
     fields = ['name_first', 'name_last']
     template_name = 'names/update.html'
 
 
-class NameDelete(generic.DeleteView):
+class NameDeleteView(generic.DeleteView):
     model = Name
     template_name = 'names/delete.html'
     #success_url = reverse_lazy('names:index')
     success_url = reverse_lazy('names:index')
+
 
 '''
 class ResultsView(generic.DetailView):

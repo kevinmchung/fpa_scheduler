@@ -3,14 +3,14 @@ from django.views import generic
 from django.http import HttpResponseRedirect
 from .models import Name
 from .forms import NameForm
-#from django.views.generic.edit import UpdateView
+from django.urls import reverse_lazy
+from django.views.generic.edit import UpdateView
 
 
 
 class NameIndexView(generic.ListView):
     template_name = 'names/index.html'
     context_object_name = 'names_list'
-
     form_class = NameForm
 
     def get(self, request):
@@ -32,18 +32,18 @@ class NameDetailView(generic.DetailView):
     template_name = 'names/detail.html'
 
 
+
 class NameUpdateView(generic.UpdateView):
     model = Name
     fields = ['name_first', 'name_last']
-    template_name = 'names/detail.html'
+    template_name = 'names/update.html'
 
 
-'''
-
-    def get(self, request):
-        template_name = 'polls/detail.html'
-
-'''
+class NameDelete(generic.DeleteView):
+    model = Name
+    template_name = 'names/delete.html'
+    #success_url = reverse_lazy('names:index')
+    success_url = reverse_lazy('names:index')
 
 '''
 class ResultsView(generic.DetailView):

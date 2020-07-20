@@ -1,0 +1,18 @@
+{% extends "names/base.html" %}
+
+{% block breadcrumb_page %}
+    <li class="breadcrumb-item active">Delete</li>
+{% endblock %}
+
+{% block content %}
+
+    <h1>Delete Name</h1>
+    <br>
+    <form method="post">{% csrf_token %}
+    <p>Are you sure you want to delete "{{ object }}"?</p>
+    <input type="submit" value="Confirm">
+    </form>
+    <br>
+    <a href="/names"}>Back to Names List</a>
+
+{% endblock %}

@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 # Make your models here
 
@@ -11,4 +12,4 @@ class Name(models.Model):
         return "{} {}".format(self.name_first, self.name_last)
 
     def get_absolute_url(self):
-        return reverse('name-detail', kwargs={'pk': self.pk})
+        return reverse('names:detail', kwargs={'pk': self.pk})

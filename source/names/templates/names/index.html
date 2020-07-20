@@ -12,7 +12,8 @@
         {% for name in names_list %}
             <tr>
                 <td>{{ name }}</td>
-                <td><a href="{% url 'names:update' name.id %}">edit</a></td>
+                <td><a href="{% url 'names:update' name.id %}">Edit</a></td>
+                <td><a href="{% url 'names:delete' name.id %}">Delete</a></td>
             </tr>
         {% endfor %}
         </ul>

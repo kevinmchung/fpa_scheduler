@@ -3,11 +3,11 @@ from django.views import generic
 from django.http import HttpResponseRedirect
 from .models import Name
 from .forms import NameForm
-from django.views.generic.edit import UpdateView
+#from django.views.generic.edit import UpdateView
 
 
 
-class IndexView(generic.ListView):
+class NameIndexView(generic.ListView):
     template_name = 'names/index.html'
     context_object_name = 'names_list'
 
@@ -27,15 +27,15 @@ class IndexView(generic.ListView):
 
 
 
-class DetailView(generic.DetailView):
+class NameDetailView(generic.DetailView):
     model = Name
     template_name = 'names/detail.html'
 
 
-class NameUpdate(UpdateView):
+class NameUpdateView(generic.UpdateView):
     model = Name
     fields = ['name_first', 'name_last']
-    template_name = template_name = 'names/detail.html'
+    template_name = 'names/detail.html'
 
 
 '''
@@ -86,11 +86,7 @@ class EditView(generic.DetailView):
 '''
 
 
-
-
-
-
-
+'''
 
 def name_edit(request):
 
@@ -114,3 +110,5 @@ def name_edit(request):
 def name_delete(request):
 
     return render(request, 'names/index.html', {'form': form, 'names_list': Name.objects.order_by('name_last')})
+
+'''

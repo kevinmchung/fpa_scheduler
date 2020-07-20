@@ -15,3 +15,6 @@ venv/Scripts/python.exe
 venv/Scripts/pythonw.exe
 .idea/fpa_scheduler.iml
 .idea/misc.xml
+venv/Scripts/activate.bat
+.idea/fpa_scheduler.iml
+.idea/misc.xml

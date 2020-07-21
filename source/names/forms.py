@@ -7,4 +7,4 @@ class NameForm(ModelForm):
 
     class Meta:
         model = Name
-        fields = ['name_first', 'name_last']
+        fields = ['name_first', 'name_last', 'abbr',]

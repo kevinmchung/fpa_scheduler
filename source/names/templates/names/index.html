@@ -3,27 +3,34 @@
 
 {% block content %}
 
-    <h1>Names</h1>
+    <h1>Provider Names</h1>
 
     <br>
 
-
-
     {% if names_list %}
-
-    <table class="table">
-        {% for name in names_list %}
+        <table class="table">
+            <thead>
             <tr>
-                <td>{{ name }}</td>
-                <td align="right"><a href="{% url 'names:update' name.id %}"><img alt="edit" src="{% static 'scheduler/img/pencil.png' %}" width=25" height="25">Edit</a></td>
-                <td align="right"><a href="{% url 'names:delete' name.id %}"><img alt="delete" src="{% static 'scheduler/img/trash.png' %}" width=22" height="22">Delete</a></td>
+                <th>Name</th>
+                <th>Abbreviation</th>
+                <th></th>
+                <th></th>
             </tr>
-        {% endfor %}
-        </ul>
+            </thead>
 
-    </table>
-    {% else %}
-        <p>No names in list.</p>
+            <tbody>
+            {% for name in names_list %}
+                <tr>
+                    <td>{{ name }}</td>
+                    <td>{{ name.abbr }}</td>
+                    <td align="right"><a href="{% url 'names:update' name.id %}"><img alt="edit" src="{% static 'scheduler/img/pencil.png' %}" width=25" height="25">Edit</a></td>
+                    <td align="right"><a href="{% url 'names:delete' name.id %}"><img alt="delete" src="{% static 'scheduler/img/trash.png' %}" width=22" height="22">Delete</a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+            <p>No names in list.</p>
     {% endif %}
 
     <br>

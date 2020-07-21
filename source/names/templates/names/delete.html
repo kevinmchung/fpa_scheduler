@@ -6,7 +6,7 @@
 
 {% block content %}
 
-    <h1>Delete Name</h1>
+    <h1>Delete Provider Name</h1>
     <br>
     <form method="post">{% csrf_token %}
         <p>Are you sure you want to delete?</p>
@@ -15,6 +15,6 @@
     <input type="submit" value="Confirm Delete">
     </form>
     <br>
-    <a href="/names"}>Back to Names List</a>
+    <a href="/names"}>Back to Provider Names</a>
 
 {% endblock %}

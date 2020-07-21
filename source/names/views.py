@@ -34,7 +34,7 @@ class NameDetailView(generic.DetailView):
 
 class NameUpdateView(generic.UpdateView):
     model = Name
-    fields = ['name_first', 'name_last']
+    fields = ['name_first', 'name_last', 'abbr']
     template_name = 'names/update.html'
 
 

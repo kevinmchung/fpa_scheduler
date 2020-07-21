@@ -1,5 +1,10 @@
 {% extends "mysite/base.html" %}
 
+
+<!-- THIS FILE IS NOW HIDDEN IN SCHEDULER -->
+<!-- CAN BE USED TO NAVIGATE REFERENCE APPS -->
+
+
 {% block breadcrumb_app %}
 {% endblock %}
 
@@ -8,12 +13,12 @@
     <h1>Home</h1>
     <p></p>
     <ul>
-    <li><a href="/scheduler">Scheduler</a></li>
-    <li><a href="/names">Names</a></li>
-
-    <br><br>
-    <li><a href="/polls">Polls (example)</a></li>
+    <li><a href="{% url 'scheduler:provider-index' %}">Scheduler</a></li>
     </ul>
-
+    <br><br>
+    <ul>
+    <li><a href="{% url 'names:index' %}">Names</a></li>
+    <li><a href="{% url 'polls:index' %}">Polls (example)</a></li>
+    </ul>
 
 {% endblock %}

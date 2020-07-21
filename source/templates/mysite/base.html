@@ -33,7 +33,7 @@
     {% block breadcrumb %}
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="/">Home</a></li>
+          {% block breadcrumb_base %}<li class="breadcrumb-item"><a href="/">Home</a></li>{% endblock %}
           {% block breadcrumb_app %}{% endblock %}
           {% block breadcrumb_page %}{% endblock %}
       </ol>

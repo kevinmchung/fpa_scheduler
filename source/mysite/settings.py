@@ -99,7 +99,7 @@ if os.getenv('GAE_APPLICATION', None):
             'HOST': '/cloudsql/scheduler2020:us-east1:scheduler-dev',
             'USER': 'django',
             'PASSWORD': 'AoxZic39J0h8R2ol',
-            'NAME': 'scheduler_2',
+            'NAME': 'scheduler_1',
         }
     }
 else:
@@ -115,7 +115,7 @@ else:
             'ENGINE': 'django.db.backends.mysql',
             'HOST': '127.0.0.1',
             'PORT': '3306',
-            'NAME': 'scheduler_2',
+            'NAME': 'scheduler_1',
             'USER': 'django',
             'PASSWORD': 'AoxZic39J0h8R2ol',
         }

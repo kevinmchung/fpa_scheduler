@@ -9,7 +9,15 @@ app_name = 'scheduler'
 urlpatterns = [
     path('', views.IndexView.as_view(), name='index'),
 
-    # names has been moved to names app -- not needed here anymore
-    #path('names/', views.name_add, name='names'),
-    #path('names/<int:pk>/', views.NamesView.as_view(), name='namesdetail'),
+    path('provider', views.ProviderIndexView.as_view(), name='provider-index'),
+    path('provider/<int:pk>/update', views.ProviderUpdateView.as_view(), name='provider-update'),
+    path('provider/<int:pk>/delete', views.ProviderDeleteView.as_view(), name='provider-delete'),
+    path('provider/<int:pk>', views.ProviderDetailView.as_view(), name='provider-detail'),
+
+    path('location', views.LocationIndexView.as_view(), name='location-index'),
+    path('location/<int:pk>/update', views.LocationUpdateView.as_view(), name='location-update'),
+    path('location/<int:pk>/delete', views.LocationDeleteView.as_view(), name='location-delete'),
+    path('location/<int:pk>', views.LocationDetailView.as_view(), name='location-detail'),
+
+
 ]

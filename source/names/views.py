@@ -15,7 +15,7 @@ class NameIndexView(generic.ListView):
 
     def get(self, request):
         #form_class = NameForm
-        return render(request, 'names/index.html', {'form': self.form_class, 'names_list': Name.objects.order_by('name_last')})
+        return render(request, self.template_name, {'form': self.form_class, 'names_list': Name.objects.order_by('name_last')})
 
 
     def post(self, request):

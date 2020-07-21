@@ -23,9 +23,9 @@ from django.contrib.staticfiles import views as staticviews
 from django.urls import re_path
 
 urlpatterns = [
-    path('', views.IndexView.as_view(), name='index'),
+    #path('', views.IndexView.as_view(), name='index'),
+    path('', include('scheduler.urls')),
     path('names/', include('names.urls')),
-    path('scheduler/', include('scheduler.urls')),
     path('polls/', include('polls.urls')),
     path('admin/', admin.site.urls),
 ]

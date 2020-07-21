@@ -1,0 +1,16 @@
+{% extends "scheduler/base.html" %}
+
+{% block breadcrumb_page %}
+    <li class="breadcrumb-item active">Detail</li>
+{% endblock %}
+
+{% block content %}
+
+    <h1>Location Detail</h1>
+    <br>
+    <h3>{{ object }}</h3>
+    <p>{{ object.abbr }}</p>
+    <br>
+    <a href="{% url 'scheduler:location-index' %}"}>Back to Location list</a>
+
+{% endblock %}

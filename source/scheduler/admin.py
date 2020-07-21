@@ -2,7 +2,8 @@
 
 from django.contrib import admin
 
-from .models import Provider, Office
+from .models import Provider, Location
 
+#admin.site.register(Preference)
 admin.site.register(Provider)
-admin.site.register(Office)
+admin.site.register(Location)

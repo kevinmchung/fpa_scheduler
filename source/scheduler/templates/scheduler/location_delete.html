@@ -1,0 +1,23 @@
+{% extends "scheduler/base.html" %}
+
+{% block breadcrumb_page %}
+    <li class="breadcrumb-item"><a href="{% url 'scheduler:location-index' %}"}>Location</a></li>
+    <li class="breadcrumb-item active">Delete</li>
+{% endblock %}
+
+{% block content %}
+
+    <h1>Delete Location Name</h1>
+    <br>
+    <form method="post">{% csrf_token %}
+        <p>Are you sure you want to delete the location?  All of the preferences with this location will also be deleted.</p>
+
+        <h3>{{ object }} ( {{ object.abbrev }} )</h3>
+        <br>
+        <p class="text-danger">[ THIS CANNOT BE UNDONE ]</p>
+    <input type="submit" value="Confirm Delete">
+    </form>
+    <br>
+    <a href="{% url 'scheduler:provider-index' %}"}>Back to Location List</a>
+
+{% endblock %}

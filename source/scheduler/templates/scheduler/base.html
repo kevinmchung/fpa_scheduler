@@ -2,8 +2,7 @@
 
 {% block title %}FPA Scheduler{% endblock %}
 
+{% block breadcrumb_base %}{% endblock %}
+{% block breadcrumb_app %}<li class="breadcrumb-item"><a href="{% url 'scheduler:index' %}">Scheduler</a></li>{% endblock %}
 
-{% block breadcrumb_app %}
-    <li class="breadcrumb-item"><a href="/scheduler/">Scheduler</a></li>
-{% endblock %}
 

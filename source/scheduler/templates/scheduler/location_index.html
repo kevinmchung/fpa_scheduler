@@ -1,0 +1,62 @@
+{% extends "scheduler/base.html" %}
+{% load static %}
+
+{% block breadcrumb_page %}
+    <li class="breadcrumb-item" active><a href="{% url 'scheduler:location-index' %}"}>Location</a></li>
+{% endblock %}
+
+{% block content %}
+
+    <h1>Locations</h1>
+
+    <br>
+
+    {% if location_list %}
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Abbreviation</th>
+                <th>Provider Range</th>
+                <th>Weekends</th>
+                <th></th>
+            </tr>
+            </thead>
+
+            <tbody>
+            {% for location in location_list %}
+                <tr>
+                    <td>{{ location }}</td>
+                    <td>{{ location.abbrev }}</td>
+                    <td>{{ location.provider_range }}</td>
+                    <td>{{ location.weekend }}</td>
+                    <td align="right"><a href="{% url 'scheduler:location-update' location.id %}"><img alt="edit" src="{% static 'scheduler/img/pencil.png' %}" width=25" height="25">Edit</a></td>
+                    <td align="right"><a href="{% url 'scheduler:location-delete' location.id %}"><img alt="delete" src="{% static 'scheduler/img/trash.png' %}" width=22" height="22">Delete</a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+            <p>No locations in list.</p>
+    {% endif %}
+
+    <br>
+    <br>
+
+    <p>
+    <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+    Add a Name
+    </a>
+    </p>
+    <div class="collapse" id="collapseExample">
+      <div class="card card-body">
+          <h3>Add a Name</h3><br>
+          <form action="" method="post">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <input class="btn btn-primary" type="submit" value="Add">
+          </form>
+      </div>
+    </div>
+
+{% endblock %}

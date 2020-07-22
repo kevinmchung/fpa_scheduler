@@ -2,41 +2,57 @@
 {% load static %}
 
 {% block breadcrumb_app %}<li class="breadcrumb-item" aria-current="page"><a href="{% url 'scheduler:index' %}"}>Scheduler</a></li>{% endblock %}
-{% block breadcrumb_page %}<li class="breadcrumb-item" active><a href="{% url 'scheduler:preference-index' %}"}>Preference</a></li>{% endblock %}
+{% block breadcrumb_page %}<li class="breadcrumb-item" active><a href="{% url 'scheduler:preference-index' %}"}>Preferences</a></li>{% endblock %}
 
 {% block content %}
 
     <h1>Preferences</h1>
-    <p>Here is where we can see/edit preferences.</p>
-    <br><br>
-    <p>List of all providers and their preferences</p>
 
-     {% if provider_list %}
-            <table class="table">
-                <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Abbreviation</th>
-                    <th>Working Days Per Week</th>
-                    <th></th>
-                    <th></th>
-                </tr>
-                </thead>
+    <br>
 
-                <tbody>
-                {% for provider in provider_list %}
-                    <tr>
-                        <td>{{ provider }}</td>
-                        <td>{{ provider.abbrev }}</td>
-                        <td>{{ provider.days_per_week }}</td>
-                        <td align="right"><a href="{% url 'scheduler:provider-update' provider.id %}"><img alt="edit" src="{% static 'scheduler/img/pencil.png' %}" width=25" height="25">Edit</a></td>
-                        <td align="right"><a href="{% url 'scheduler:provider-delete' provider.id %}"><img alt="delete" src="{% static 'scheduler/img/trash.png' %}" width=22" height="22">Delete</a></td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-            {% else %}
-                <p>No names in list.</p>
-        {% endif %}
+    {% if provider_list %}
+
+        <div id="accordion">
+
+            <!--- needs to start with all collapsed -->
+
+            {% for provider in provider_list %}
+                <div class="card">
+                    <div class="card-header" id="heading_{{ provider.abbrev }}">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link" data-toggle="collapse" data-target="#collapse_{{ provider.abbrev }}" aria-expanded="true" aria-controls="collapse_{{ provider.abbrev }}">
+
+                                {{ provider }} - {{ provider.abbrev }}
+
+                            </button>
+
+                            <!--
+                            <td>{{ provider.days_per_week }}</td>
+                            <td align="right"><a href="{% url 'scheduler:provider-update' provider.id %}"><img alt="edit" src="{% static 'scheduler/img/pencil.png' %}" width=25" height="25">Edit</a></td>
+                            <td align="right"><a href="{% url 'scheduler:provider-delete' provider.id %}"><img alt="delete" src="{% static 'scheduler/img/trash.png' %}" width=22" height="22">Delete</a></td>
+                            -->
+                        </h5>
+                    </div>
+
+                    <div id="collapse_{{ provider.abbrev }}" class="collapse show" aria-labelledby="heading_{{ provider.abbrev }}" data-parent="#accordion">
+                      <div class="card-body">
+                        Preference information for each provider is shown here.
+                      </div>
+                    </div>
+
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    {% else %}
+        <p>No names in list.</p>
+    {% endif %}
+
+    <br>
+    <br>
+
 
 {% endblock %}

@@ -15,8 +15,23 @@ class IndexView(generic.ListView):
         return 0
 
 
+# APP FUNCTIONS
+
+
+
+
+
 
 # PROVIDER VIEWS
+
+def new_provider_create_related_ProviderLocationMax(provider):
+
+    location_list = Location.objects.all()
+
+    for location in location_list:
+        new = ProviderLocationMax(provider=provider, location=location)
+        new.save()
+
 
 class ProviderIndexView(generic.ListView):
 
@@ -30,8 +45,8 @@ class ProviderIndexView(generic.ListView):
     def post(self, request):
         form = self.form_class(request.POST)
         if form.is_valid():
-            #form.cleaned_data['abbrev'] = form.cleaned_data['abbrev'].upper()
-            form.save()
+            new_provider = form.save()
+            new_provider_create_related_ProviderLocationMax(new_provider)
             return HttpResponseRedirect(request.path_info)
         return render(request, self.template_name, {'form': form})
 
@@ -58,6 +73,16 @@ class ProviderDeleteView(generic.DeleteView):
 
 # LOCATION VIEWS
 
+
+def new_location_create_related_ProviderLocationMax(location):
+
+    provider_list = Provider.objects.all()
+
+    for provider in provider_list:
+        new = ProviderLocationMax(provider=provider, location=location)
+        new.save()
+
+
 class LocationIndexView(generic.ListView):
 
     template_name = 'scheduler/location_index.html'
@@ -70,9 +95,14 @@ class LocationIndexView(generic.ListView):
     def post(self, request):
         form = self.form_class(request.POST)
         if form.is_valid():
-            form.save()
+            new_location = form.save()
+            new_location_create_related_ProviderLocationMax(new_location)
             return HttpResponseRedirect(request.path_info)
         return render(request, self.template_name, {'form': form})
+
+
+
+
 
 
 class LocationDetailView(generic.DetailView):

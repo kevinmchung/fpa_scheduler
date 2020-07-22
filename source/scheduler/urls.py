@@ -19,5 +19,6 @@ urlpatterns = [
     path('location/<int:pk>/delete', views.LocationDeleteView.as_view(), name='location-delete'),
     path('location/<int:pk>', views.LocationDetailView.as_view(), name='location-detail'),
 
+    path('preference', views.PreferenceIndexView.as_view(), name='preference-index'),
 
 ]

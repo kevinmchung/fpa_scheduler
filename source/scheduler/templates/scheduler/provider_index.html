@@ -16,7 +16,7 @@
             <tr>
                 <th>Name</th>
                 <th>Abbreviation</th>
-                <th>Work Days</th>
+                <th>Working Days Per Week</th>
                 <th></th>
                 <th></th>
             </tr>
@@ -27,7 +27,7 @@
                 <tr>
                     <td>{{ provider }}</td>
                     <td>{{ provider.abbrev }}</td>
-                    <td>{{ provider.num_work_days }}</td>
+                    <td>{{ provider.days_per_week }}</td>
                     <td align="right"><a href="{% url 'scheduler:provider-update' provider.id %}"><img alt="edit" src="{% static 'scheduler/img/pencil.png' %}" width=25" height="25">Edit</a></td>
                     <td align="right"><a href="{% url 'scheduler:provider-delete' provider.id %}"><img alt="delete" src="{% static 'scheduler/img/trash.png' %}" width=22" height="22">Delete</a></td>
                 </tr>

@@ -30,6 +30,7 @@ class ProviderIndexView(generic.ListView):
     def post(self, request):
         form = self.form_class(request.POST)
         if form.is_valid():
+            #form.cleaned_data['abbrev'] = form.cleaned_data['abbrev'].upper()
             form.save()
             return HttpResponseRedirect(request.path_info)
         return render(request, self.template_name, {'form': form})
@@ -42,7 +43,7 @@ class ProviderDetailView(generic.DetailView):
 
 class ProviderUpdateView(generic.UpdateView):
     model = Provider
-    fields = ['name_first', 'name_last', 'abbrev', 'num_work_days']
+    form_class = ProviderForm
     template_name = 'scheduler/provider_update.html'
     success_url = reverse_lazy('scheduler:provider-index')
 
@@ -81,7 +82,7 @@ class LocationDetailView(generic.DetailView):
 
 class LocationUpdateView(generic.UpdateView):
     model = Location
-    fields = ['name', 'abbrev', 'provider_range', 'weekend']
+    form_class = LocationForm
     template_name = 'scheduler/location_update.html'
     success_url = reverse_lazy('scheduler:location-index')
 
@@ -90,3 +91,14 @@ class LocationDeleteView(generic.DeleteView):
     model = Location
     template_name = 'scheduler/location_delete.html'
     success_url = reverse_lazy('scheduler:location-index')
+
+
+
+# PREFERENCE VIEWS
+
+class PreferenceIndexView(generic.ListView):
+
+    template_name = 'scheduler/preference_index.html'
+
+    def get(self, request):
+        return render(request, self.template_name, {'provider_list': Provider.objects.order_by('name')})

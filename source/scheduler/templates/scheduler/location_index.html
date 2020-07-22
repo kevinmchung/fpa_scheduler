@@ -17,8 +17,10 @@
             <tr>
                 <th>Name</th>
                 <th>Abbreviation</th>
-                <th>Provider Range</th>
+                <th>Min Providers Need</th>
+                <th>Max Providers Need</th>
                 <th>Weekends</th>
+                <th></th>
                 <th></th>
             </tr>
             </thead>
@@ -28,7 +30,8 @@
                 <tr>
                     <td>{{ location }}</td>
                     <td>{{ location.abbrev }}</td>
-                    <td>{{ location.provider_range }}</td>
+                    <td>{{ location.provider_min }}</td>
+                    <td>{{ location.provider_max }}</td>
                     <td>{{ location.weekend }}</td>
                     <td align="right"><a href="{% url 'scheduler:location-update' location.id %}"><img alt="edit" src="{% static 'scheduler/img/pencil.png' %}" width=25" height="25">Edit</a></td>
                     <td align="right"><a href="{% url 'scheduler:location-delete' location.id %}"><img alt="delete" src="{% static 'scheduler/img/trash.png' %}" width=22" height="22">Delete</a></td>

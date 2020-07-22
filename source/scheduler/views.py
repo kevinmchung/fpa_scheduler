@@ -4,7 +4,7 @@ from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.views import generic
 
-from .models import Provider, Location
+from .models import Provider, Location, ProviderVacation, ProviderLocationMax
 from .forms import ProviderForm, LocationForm
 from django.urls import reverse_lazy
 
@@ -101,4 +101,4 @@ class PreferenceIndexView(generic.ListView):
     template_name = 'scheduler/preference_index.html'
 
     def get(self, request):
-        return render(request, self.template_name, {'provider_list': Provider.objects.order_by('name')})
+        return render(request, self.template_name, {'provider_list': Provider.objects.order_by('name_last')})

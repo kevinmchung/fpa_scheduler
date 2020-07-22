@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import ModelForm
-from .models import Provider, Location
+from .models import Provider, Location, ProviderVacation, ProviderLocationMax
 from django.utils.translation import gettext_lazy as _
 
 

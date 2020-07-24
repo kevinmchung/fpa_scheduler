@@ -1,0 +1,32 @@
+{% load static %}
+
+<!-- PROVIDER VACATION DAYS -->
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>Vacation Dates</th>
+        <td align="right"><a href="{% url 'scheduler:preference-plm-update' provider.id %}"><img alt="edit" src="{% static 'scheduler/img/pencil.png' %}" width=25" height="25">Edit</a></td>
+    </tr>
+    </thead>
+
+    <tbody>
+
+    {% if provider_vacation_list %}
+
+        {% for provider_vacation in provider_vacation_list %}
+                <tr>
+                    <td>{{ provider_vacation.vacation_date }}</td>
+                    <td></td>
+                </tr>
+        {% endfor %}
+
+    {% else %}
+            <tr>
+                <td>No Vacation Dates</td>
+                <td></td>
+            </tr>
+    {% endif %}
+
+    </tbody>
+</table>

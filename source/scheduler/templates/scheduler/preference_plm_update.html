@@ -1,0 +1,30 @@
+{% extends "scheduler/base.html" %}
+
+{% block breadcrumb_page %}
+    <li class="breadcrumb-item"><a href="{% url 'scheduler:preference-index' %}"}>Preference</a></li>
+    <li class="breadcrumb-item active">Edit</li>
+{% endblock %}
+
+{% block content %}
+
+    <h1>Preferences - Provider Location</h1>
+    <br>
+
+
+    <form method="post">
+
+        {% csrf_token %}
+        {{ formset.management_form }}
+        {% for form in formset %}
+            {{ form }}
+
+        <br>
+        {% endfor %}
+
+        <br>
+
+        <input type="submit" value="Update">
+    </form>
+
+
+{% endblock %}

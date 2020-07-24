@@ -1,0 +1,38 @@
+{% load static %}
+
+<!-- PROVIDER LOCATION PREFERENCES -->
+
+{% if provider_location_max_list %}
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Location Preferences</th>
+            <th>Abbreviation</th>
+            <th>Max Days Per Week</th>
+            <td align="right"><a href="{% url 'scheduler:preference-plm-update' provider.id %}"><img alt="edit" src="{% static 'scheduler/img/pencil.png' %}" width=25" height="25">Edit</a></td>
+        </tr>
+        </thead>
+
+        <tbody>
+
+{% for provider_location_max in provider_location_max_list %}
+
+    {% if provider_location_max.provider.id == provider.id %}
+
+            <tr>
+                <td>{{ provider_location_max.location.name }}</td>
+                <td>{{ provider_location_max.location.abbrev }}</td>
+                <td>{{ provider_location_max.provider_at_location_max_days}}</td>
+                <td></td>
+
+            </tr>
+
+    {% endif %}
+
+{% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>No Location Preferences.</p>
+{% endif %}

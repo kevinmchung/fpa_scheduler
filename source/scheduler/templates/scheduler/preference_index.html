@@ -8,6 +8,7 @@
 
     <h1>Preferences</h1>
 
+    <p>Click on a provider name to see their scheduling preferences.</p>
     <br>
 
     {% if provider_list %}
@@ -20,28 +21,27 @@
                 <div class="card">
                     <div class="card-header" id="heading_{{ provider.abbrev }}">
                         <h5 class="mb-0">
-                            <button class="btn btn-link" data-toggle="collapse" data-target="#collapse_{{ provider.abbrev }}" aria-expanded="true" aria-controls="collapse_{{ provider.abbrev }}">
-
+                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse_{{ provider.abbrev }}" aria-expanded="false" aria-controls="collapse_{{ provider.abbrev }}">
                                 {{ provider }} - {{ provider.abbrev }}
-
                             </button>
-
-                            <!--
-                            <td>{{ provider.days_per_week }}</td>
-                            <td align="right"><a href="{% url 'scheduler:provider-update' provider.id %}"><img alt="edit" src="{% static 'scheduler/img/pencil.png' %}" width=25" height="25">Edit</a></td>
-                            <td align="right"><a href="{% url 'scheduler:provider-delete' provider.id %}"><img alt="delete" src="{% static 'scheduler/img/trash.png' %}" width=22" height="22">Delete</a></td>
-                            -->
                         </h5>
                     </div>
 
-                    <div id="collapse_{{ provider.abbrev }}" class="collapse show" aria-labelledby="heading_{{ provider.abbrev }}" data-parent="#accordion">
+                    <div id="collapse_{{ provider.abbrev }}" class="collapse" aria-labelledby="heading_{{ provider.abbrev }}" data-parent="#accordion">
                       <div class="card-body">
-                        Preference information for each provider is shown here.
+
+                          {% block preference_blocks %}
+                          {% include "scheduler/preference_blocks_workingdays.html" %}
+                          {% include "scheduler/preference_blocks_plm_multi.html" %}
+                          {% include "scheduler/preference_blocks_vacationdays_multi.html" %}
+                          {% endblock %}
+
                       </div>
+
                     </div>
 
-
                 </div>
+            <br>
 
             {% endfor %}
 

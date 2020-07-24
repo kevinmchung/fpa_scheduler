@@ -20,5 +20,8 @@ urlpatterns = [
     path('location/<int:pk>', views.LocationDetailView.as_view(), name='location-detail'),
 
     path('preference', views.PreferenceIndexView.as_view(), name='preference-index'),
+    path('preference/<int:pk>', views.PreferenceDetailView.as_view(), name='preference-detail'),
+
+    path('preference/plm/<int:pk>/update', views.ProviderLocationMaxUpdateView.as_view(), name='preference-plm-update'),
 
 ]

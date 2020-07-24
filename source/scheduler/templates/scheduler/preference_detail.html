@@ -1,0 +1,29 @@
+{% extends "scheduler/base.html" %}
+{% load static %}
+
+{% block breadcrumb_page %}
+<li class="breadcrumb-item"><a href="{% url 'scheduler:preference-index' %}">Preference</a></li>
+<li class="breadcrumb-item active">Detail</li>
+{% endblock %}
+
+{% block content %}
+
+    <h1>Preference Detail</h1>
+    <br>
+
+    {% if provider %}
+
+        <h2>{{ provider }} - {{ provider.abbrev }}</h2>
+        <br>
+        {% block preference_blocks %}
+        {% include "scheduler/preference_blocks_workingdays.html" %}
+        {% include "scheduler/preference_blocks_plm_single.html" %}
+        {% include "scheduler/preference_blocks_vacationdays_single.html" %}
+        {% endblock %}
+
+    {% endif %}
+
+    <br>
+    <a href="{% url 'scheduler:preference-index' %}"}>Back to Preferences list</a>
+
+{% endblock %}

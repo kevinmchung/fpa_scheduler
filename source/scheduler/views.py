@@ -1,12 +1,14 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect # noqa: 401
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse
-from django.views import generic
+from django.views import generic, View
 
 from .models import Provider, Location, ProviderVacation, ProviderLocationMax
-from .forms import ProviderForm, LocationForm
+from .forms import ProviderForm, LocationForm, ProviderLocationMaxForm
+from django.forms import modelformset_factory, inlineformset_factory
 from django.urls import reverse_lazy
+
 
 class IndexView(generic.ListView):
     template_name = 'scheduler/index.html'
@@ -103,8 +105,6 @@ class LocationIndexView(generic.ListView):
 
 
 
-
-
 class LocationDetailView(generic.DetailView):
     model = Location
     template_name = 'scheduler/location_detail.html'
@@ -131,4 +131,74 @@ class PreferenceIndexView(generic.ListView):
     template_name = 'scheduler/preference_index.html'
 
     def get(self, request):
-        return render(request, self.template_name, {'provider_list': Provider.objects.order_by('name_last')})
+        return render(request, self.template_name,{
+                      'provider_list': Provider.objects.order_by('name_last'),
+                      'provider_location_max_list': ProviderLocationMax.objects.all(),
+                      'provider_vacation_list': ProviderVacation.objects.all(),
+                    })
+
+
+class PreferenceDetailView(View):
+
+    template_name = 'scheduler/preference_detail.html'
+
+    def get(self, request, **kwargs):
+
+        pk = self.kwargs['pk']
+        provider = Provider.objects.get(id=pk)
+        provider_location_max_list = ProviderLocationMax.objects.filter(provider_id=pk).order_by('location')
+        provider_vacation_list = ProviderVacation.objects.filter(provider_id=pk).order_by('vacation_date')
+
+        return render(request, self.template_name,{
+                      'provider': provider,
+                      'provider_location_max_list': provider_location_max_list,
+                      'provider_vacation_list': provider_vacation_list,
+                   })
+
+
+
+
+# PROVIDER LOCATION MAX VIEWS
+
+class ProviderLocationMaxUpdateView(View):
+
+    # model = ProviderLocationMax
+    # form_class = ProviderLocationMaxForm
+    template_name = 'scheduler/preference_plm_update.html'
+
+    def get(self, request,**kwargs):
+        pk = self.kwargs['pk']
+        provider = Provider.objects.get(pk=pk)
+        plmFormset = inlineformset_factory(Provider, ProviderLocationMax,
+                                           fields=('location','provider_at_location_max_days',),
+                                           #inlines= [provider],
+                                           can_delete=False, can_order=False, extra=0)
+        formset = plmFormset(instance=provider)
+
+        #formset = ProviderLocationMaxForm(provider)
+        #plmFormset = modelformset_factory(ProviderLocationMax, fields=('location', 'provider_at_location_max_days',))
+        #formset = plmFormset(queryset=ProviderLocationMax.objects.filter(provider_id=pk))
+
+        return render(request, self.template_name, {'formset':formset, 'provider':provider})
+
+    def post(self, request, *args, **kwargs):
+
+        pk = self.kwargs['pk']
+        provider = Provider.objects.get(pk=pk)
+        plmFormset = inlineformset_factory(Provider, ProviderLocationMax,
+                                           fields=('location', 'provider_at_location_max_days',),
+                                           can_delete=False, can_order=False, extra=0)
+        formset = plmFormset(request.POST, instance=provider)
+
+        #plmFormset = modelformset_factory(ProviderLocationMax, fields=('location', 'provider_at_location_max_days',))
+        #formset = plmFormset(queryset=ProviderLocationMax.objects.filter(provider_id=pk))
+
+        if formset.is_valid():
+            formset.save()
+            #instances = formset.save(commit=False)
+            #for i in instances:
+            #    i.provider_id = pk
+            #    i.save()
+
+        return redirect('scheduler:preference-detail', pk=pk)
+

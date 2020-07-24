@@ -1,5 +1,5 @@
 from django import forms
-from django.forms import ModelForm
+from django.forms import ModelForm,inlineformset_factory
 from .models import Provider, Location, ProviderVacation, ProviderLocationMax
 from django.utils.translation import gettext_lazy as _
 
@@ -44,3 +44,14 @@ class LocationForm(ModelForm):
 
     def clean_abbrev(self):
         return self.cleaned_data['abbrev'].upper()
+
+
+
+class ProviderLocationMaxForm(Provider):
+    # NOT USED RIGHT NOW
+    plm_formset = inlineformset_factory(Provider, ProviderLocationMax,
+                                       fields=('location', 'provider_at_location_max_days',),
+                                       can_delete=False, can_order=False, extra=0)
+
+
+

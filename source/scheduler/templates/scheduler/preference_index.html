@@ -15,10 +15,9 @@
 
         <div id="accordion">
 
-            <!--- needs to start with all collapsed -->
-
             {% for provider in provider_list %}
                 <div class="card">
+
                     <div class="card-header" id="heading_{{ provider.abbrev }}">
                         <h5 class="mb-0">
                             <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse_{{ provider.abbrev }}" aria-expanded="false" aria-controls="collapse_{{ provider.abbrev }}">
@@ -37,12 +36,10 @@
                           {% endblock %}
 
                       </div>
-
                     </div>
 
                 </div>
             <br>
-
             {% endfor %}
 
         </div>

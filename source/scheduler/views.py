@@ -202,3 +202,34 @@ class ProviderLocationMaxUpdateView(View):
 
         return redirect('scheduler:preference-detail', pk=pk)
 
+
+
+# PROVIDER VACATION VIEWS
+
+class ProviderVacationUpdateView(View):
+
+    template_name = 'scheduler/preference_vacation_update.html'
+
+    def get(self, request,**kwargs):
+        pk = self.kwargs['pk']
+        provider = Provider.objects.get(pk=pk)
+        plmFormset = inlineformset_factory(Provider, ProviderVacation,
+                                           fields=('vacation_date',),
+                                           can_delete=True, can_order=False, extra=10)
+        formset = plmFormset(instance=provider)
+
+        return render(request, self.template_name, {'formset':formset, 'provider':provider})
+
+    def post(self, request, *args, **kwargs):
+
+        pk = self.kwargs['pk']
+        provider = Provider.objects.get(pk=pk)
+        plmFormset = inlineformset_factory(Provider, ProviderVacation,
+                                           fields=('vacation_date',),
+                                           can_delete=True, can_order=False, extra=10)
+        formset = plmFormset(request.POST, instance=provider)
+
+        if formset.is_valid():
+            formset.save()
+
+        return redirect('scheduler:preference-detail', pk=pk)

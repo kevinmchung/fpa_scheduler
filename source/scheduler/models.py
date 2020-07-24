@@ -6,8 +6,8 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 class Provider(models.Model):
 	name_first = models.CharField(max_length=50)
 	name_last = models.CharField(max_length=50)
-	abbrev = models.CharField(max_length=3)
-	#abbrev = models.CharField(max_length=3, unique=True, error_messages={'unique':"This abbreviation is already registered."})
+	#abbrev = models.CharField(max_length=3)
+	abbrev = models.CharField(max_length=3, unique=True,)
 	days_per_week = models.PositiveSmallIntegerField(default=0)
 
 	def __str__(self):
@@ -16,7 +16,7 @@ class Provider(models.Model):
 
 class Location(models.Model):
 	name = models.CharField(max_length=50)
-	abbrev = models.CharField(max_length=5)
+	abbrev = models.CharField(max_length=5, unique=True,)
 	provider_min = models.PositiveSmallIntegerField(default=0)
 	provider_max = models.PositiveSmallIntegerField(default=0)
 	weekend = models.BooleanField()

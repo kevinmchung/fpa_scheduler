@@ -95,7 +95,6 @@ if os.getenv('GAE_APPLICATION', None):
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
-            #'HOST': '/cloudsql/scheduler-2020-06:us-east1:scheduler-dev',
             'HOST': '/cloudsql/scheduler2020:us-east1:scheduler-dev',
             'USER': 'django',
             'PASSWORD': 'AoxZic39J0h8R2ol',

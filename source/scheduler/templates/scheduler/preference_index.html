@@ -1,7 +1,6 @@
 {% extends "scheduler/base.html" %}
 {% load static %}
 
-{% block breadcrumb_app %}<li class="breadcrumb-item" aria-current="page"><a href="{% url 'scheduler:index' %}"}>Scheduler</a></li>{% endblock %}
 {% block breadcrumb_page %}<li class="breadcrumb-item" active><a href="{% url 'scheduler:preference-index' %}"}>Preferences</a></li>{% endblock %}
 
 {% block content %}

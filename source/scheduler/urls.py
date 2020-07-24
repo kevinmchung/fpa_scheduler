@@ -25,4 +25,6 @@ urlpatterns = [
     path('preference/plm/<int:pk>/update', views.ProviderLocationMaxUpdateView.as_view(), name='preference-plm-update'),
     path('preference/vacation/<int:pk>/update', views.ProviderVacationUpdateView.as_view(), name='preference-vacation-update'),
 
+    path('makeschedule', views.MakeScheduleIndexView.as_view(), name='makeschedule-index'),
+
 ]

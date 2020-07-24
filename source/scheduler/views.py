@@ -26,6 +26,8 @@ class IndexView(generic.ListView):
 
 # PROVIDER VIEWS
 
+# TODO: Ensure unique abbrev fields and provide error/validation method
+
 def new_provider_create_related_ProviderLocationMax(provider):
 
     location_list = Location.objects.all()
@@ -75,6 +77,7 @@ class ProviderDeleteView(generic.DeleteView):
 
 # LOCATION VIEWS
 
+# TODO: Ensure unique abbrev fields and provide error/validation method
 
 def new_location_create_related_ProviderLocationMax(location):
 
@@ -126,6 +129,9 @@ class LocationDeleteView(generic.DeleteView):
 
 # PREFERENCE VIEWS
 
+# TODO: accommodate for no vacation days in index view (blank row means no bottom ing TD, so underline under edit button is missing)
+
+
 class PreferenceIndexView(generic.ListView):
 
     template_name = 'scheduler/preference_index.html'
@@ -171,7 +177,6 @@ class ProviderLocationMaxUpdateView(View):
         provider = Provider.objects.get(pk=pk)
         plmFormset = inlineformset_factory(Provider, ProviderLocationMax,
                                            fields=('location','provider_at_location_max_days',),
-                                           #inlines= [provider],
                                            can_delete=False, can_order=False, extra=0)
         formset = plmFormset(instance=provider)
 
@@ -206,6 +211,9 @@ class ProviderLocationMaxUpdateView(View):
 
 # PROVIDER VACATION VIEWS
 
+# TODO: prevent duplicate dates for a provider
+# TODO: date range picker
+
 class ProviderVacationUpdateView(View):
 
     template_name = 'scheduler/preference_vacation_update.html'
@@ -233,3 +241,30 @@ class ProviderVacationUpdateView(View):
             formset.save()
 
         return redirect('scheduler:preference-detail', pk=pk)
+
+
+# MAKE SCHEDULE VIEWS
+
+# TODO: Incorporate the scheduler logid
+
+def make_schedule():
+
+    locations = Location.objects.order_by('name')
+    providers = Provider.objects.order_by('name_last')
+    plms = ProviderLocationMax.objects.all()
+    vacations = ProviderVacation.objects.order_by('vacation_date')
+
+    ## ALL OF THE SCHEDULER LOGIC HAPPENS IN HERE
+
+    schedule = False
+
+    return schedule
+
+
+class MakeScheduleIndexView(View):
+
+    template_name = 'scheduler/makeschedule_index.html'
+
+    def get(self, request):
+        schedule = make_schedule()
+        return render(request, self.template_name, {'schedule': schedule,})

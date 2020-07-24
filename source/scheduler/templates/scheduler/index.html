@@ -1,31 +1,17 @@
 {% extends "scheduler/base.html" %}
 
-{% block breadcrumb_app %}<li class="breadcrumb-item" aria-current="page"><a href="{% url 'scheduler:index' %}"}>Scheduler</a></li>{% endblock %}
-
 {% block content %}
 
     <h1>Scheduler</h1>
-    <p>Here is where we will put the scheduler controls and functions.</p>
+    <p>Set provider and location preferences and generate a schedule.</p>
 
     <br>
-
-    <!--
-    <div class="card" style="width:20rem;">
-      <div class="card-body">
-        <h5 class="card-title">Settings</h5>
-        <h6 class="card-subtitle mb-2 text-muted">Set parameters for the scheduler</h6><br>
-        <div><a class="btn-lg btn-primary" role="button" href="{% url 'scheduler:provider-index' %}">Providers</a></div><br>
-        <div><a class="btn-lg btn-primary" role="button" href="{% url 'scheduler:location-index' %}">Locations</a></div><br>
-        <div><a class="btn-lg btn-primary" role="button" href="{% url 'scheduler:preference-index' %}">Preferences</a></div><br>
-      </div>
-    </div>
-    -->
 
     <div class="row">
       <div class="col-sm-4">
         <div class="card">
+          <h5 class="card-header">Manage Providers</h5>
           <div class="card-body">
-            <h5 class="card-title">Manage Providers</h5>
             <p class="card-text" style="margin-bottom:22px;">Medical provider names and the number of days they work.</p>
             <a class="btn-lg btn-primary" role="button" href="{% url 'scheduler:provider-index' %}" >Providers</a>
           </div>
@@ -33,8 +19,8 @@
       </div>
       <div class="col-sm-4">
         <div class="card">
+          <h5 class="card-header">Manage Locations</h5>
           <div class="card-body">
-            <h5 class="card-title">Manage Locations</h5>
             <p class="card-text" style="margin-bottom:22px;">Locations for which providers should be scheduled.</p>
             <a class="btn-lg btn-primary" role="button" href="{% url 'scheduler:location-index' %}">Locations</a>
           </div>
@@ -42,16 +28,31 @@
       </div>
       <div class="col-sm-4">
         <div class="card">
-          <div class="card-body">
-            <h5 class="card-title">Manage Preferences</h5>
-            <p class="card-text" style="margin-bottom:22px;">Set location restrictions and add vacation days.</p>
+          <h5 class="card-header">Manage Preferences</h5>
+            <div class="card-body">
+
+            <p class="card-text" style="margin-bottom:22px;">Provider location preferences and vacation days.</p>
             <a class="btn-lg btn-primary" role="button" href="{% url 'scheduler:preference-index' %}">Preferences</a>
           </div>
         </div>
+      </div>
     </div>
 
+    <br>
 
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="card">
+            <h5 class="card-header">Make Schedule</h5>
+          <div class="card-body">
+            <p class="card-text" style="margin-bottom:22px;">Generate a schedule based on the settings above.</p>
+            <a class="btn-lg btn-primary" role="button" href="{% url 'scheduler:makeschedule-index' %}" >Make Schedule</a>
+          </div>
+        </div>
+      </div>
+    </div>
 
+    <br><br>
     <div>
         <br><br>
         <p>Reference Apps (Not used)</p>

@@ -1,0 +1,15 @@
+{% extends "scheduler/base.html" %}
+
+{% block content %}
+
+    <h1>Schedule</h1>
+
+    <br>
+
+    {% if schedule %}
+        {{ schedule }}
+    {% else %}
+        <p>No schedule</p>
+    {% endif %}
+
+{% endblock %}

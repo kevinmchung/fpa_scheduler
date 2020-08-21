@@ -3,6 +3,7 @@
 .idea/inspectionProfiles/Project_Default.xml
 .idea/scheduler.iml
 .idea/shelf/
+.idea
 cloud_sql_proxy
 source/.DS_Store
 *.pyc

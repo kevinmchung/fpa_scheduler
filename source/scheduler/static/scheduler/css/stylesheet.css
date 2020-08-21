@@ -29,5 +29,11 @@ img {
     font-size: 12pt;
 }
 
+.btn-delete, .btn-delete:hover, .btn-delete:active, .btn-delte:visited {
+    background-color: red;
+    border-color: red;
+}
 
-
+.asteriskField {
+    visibility: hidden;
+}

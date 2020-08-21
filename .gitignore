@@ -18,3 +18,10 @@ venv/Scripts/pythonw.exe
 venv/Scripts/activate.bat
 .idea/fpa_scheduler.iml
 .idea/misc.xml
+!/source/.idea/
+source/scheduler/migrations/0013_delete_providerlocationmaxform.py
+source/scheduler/migrations/0014_auto_20200812_1804.py
+source/static/bootstrap_datepicker_plus/
+/source/env/
+/source/.idea/
+/source/env/

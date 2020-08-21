@@ -1,5 +1,7 @@
 {% extends "scheduler/base.html" %}
 
+{% load crispy_forms_tags %}
+
 {% block breadcrumb_page %}
     <li class="breadcrumb-item"><a href="{% url 'scheduler:provider-index' %}"}>Providers</a></li>
     <li class="breadcrumb-item active">Edit</li>
@@ -9,10 +11,8 @@
 
     <h1>Edit Provider</h1>
     <br>
-    <form method="post">
+
     {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Update">
-    </form>
+    {% crispy form %}
 
 {% endblock %}

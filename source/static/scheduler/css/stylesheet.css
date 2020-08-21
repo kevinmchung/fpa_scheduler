@@ -29,5 +29,6 @@ img {
     font-size: 12pt;
 }
 
-
-
+.asteriskField {
+    visibility: hidden;
+}

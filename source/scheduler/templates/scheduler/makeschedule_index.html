@@ -1,5 +1,7 @@
 {% extends "scheduler/base.html" %}
 
+{% load crispy_forms_tags %}
+
 {% block content %}
 
     <h1>Schedule</h1>
@@ -8,8 +10,9 @@
 
     {% if schedule %}
         {{ schedule }}
-    {% else %}
-        <p>No schedule</p>
+    {% elif form %}
+        {% csrf_token %}
+        {% crispy form %}
     {% endif %}
 
 {% endblock %}

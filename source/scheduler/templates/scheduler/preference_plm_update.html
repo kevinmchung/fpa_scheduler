@@ -1,28 +1,34 @@
 {% extends "scheduler/base.html" %}
 
+{% load crispy_forms_tags %}
+
 {% block breadcrumb_page %}
-    <li class="breadcrumb-item"><a href="{% url 'scheduler:preference-index' %}"}>Preference</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'scheduler:preference-index' %}"}>Preferences</a></li>
     <li class="breadcrumb-item active">Edit</li>
 {% endblock %}
 
 {% block content %}
 
-    <h1>Preferences - Provider Location</h1>
+    <h1>Preferences - Locations</h1>
     <br>
 
+    <p>
+        Please specify the maximum amount of days you are willing to work at each location per week.
+    </p>
+    <br>
 
     <form method="post">
 
         {% csrf_token %}
         {{ formset.management_form }}
         {% for form in formset %}
-            {{ form }}
+            {% crispy form %}
         <br>
         {% endfor %}
 
         <br>
 
-        <input type="submit" value="Update">
+        <input class="btn btn-primary" type="submit" value="Update">
     </form>
 
 

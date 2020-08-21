@@ -3,9 +3,10 @@ from django.http import HttpResponse, HttpResponseRedirect # noqa: 401
 from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse
 from django.views import generic, View
+from django.views.generic.edit import UpdateView
 
 from .models import Provider, Location, ProviderVacation, ProviderLocationMax
-from .forms import ProviderForm, LocationForm, ProviderLocationMaxForm
+from .forms import ProviderForm, LocationForm, ProviderLocationMaxForm, ProviderVacationFormSet, SchedulerForm
 from django.forms import modelformset_factory, inlineformset_factory
 from django.urls import reverse_lazy
 
@@ -13,8 +14,8 @@ from django.urls import reverse_lazy
 class IndexView(generic.ListView):
     template_name = 'scheduler/index.html'
 
-    def get_queryset(self):
-        return 0
+    def get(self, request, **kwargs):
+        return render(request, self.template_name)
 
 
 # APP FUNCTIONS
@@ -42,11 +43,11 @@ class ProviderIndexView(generic.ListView):
     template_name = 'scheduler/provider_index.html'
     form_class = ProviderForm
 
-    def get(self, request):
+    def get(self, request, **kwargs):
         return render(request, self.template_name, {'form': self.form_class, 'provider_list': Provider.objects.order_by('name_last')})
 
 
-    def post(self, request):
+    def post(self, request, **kwargs):
         form = self.form_class(request.POST)
         if form.is_valid():
             new_provider = form.save()
@@ -62,7 +63,7 @@ class ProviderDetailView(generic.DetailView):
 
 class ProviderUpdateView(generic.UpdateView):
     model = Provider
-    form_class = ProviderForm
+    form_class = type('ProviderUpdateForm', (ProviderForm,), {'button_text': 'Update'})
     template_name = 'scheduler/provider_update.html'
     success_url = reverse_lazy('scheduler:provider-index')
 
@@ -93,11 +94,11 @@ class LocationIndexView(generic.ListView):
     template_name = 'scheduler/location_index.html'
     form_class = LocationForm
 
-    def get(self, request):
+    def get(self, request, **kwargs):
         return render(request, self.template_name, {'form': self.form_class, 'location_list': Location.objects.order_by('name')})
 
 
-    def post(self, request):
+    def post(self, request, **kwargs):
         form = self.form_class(request.POST)
         if form.is_valid():
             new_location = form.save()
@@ -115,7 +116,7 @@ class LocationDetailView(generic.DetailView):
 
 class LocationUpdateView(generic.UpdateView):
     model = Location
-    form_class = LocationForm
+    form_class = type('LocationUpdateForm', (LocationForm,), {'button_text': 'Update'})
     template_name = 'scheduler/location_update.html'
     success_url = reverse_lazy('scheduler:location-index')
 
@@ -136,7 +137,7 @@ class PreferenceIndexView(generic.ListView):
 
     template_name = 'scheduler/preference_index.html'
 
-    def get(self, request):
+    def get(self, request, **kwargs):
         return render(request, self.template_name,{
                       'provider_list': Provider.objects.order_by('name_last'),
                       'provider_location_max_list': ProviderLocationMax.objects.all(),
@@ -153,7 +154,7 @@ class PreferenceDetailView(View):
         pk = self.kwargs['pk']
         provider = Provider.objects.get(id=pk)
         provider_location_max_list = ProviderLocationMax.objects.filter(provider_id=pk).order_by('location')
-        provider_vacation_list = ProviderVacation.objects.filter(provider_id=pk).order_by('vacation_date')
+        provider_vacation_list = ProviderVacation.objects.filter(provider_id=pk).order_by('start_date')
 
         return render(request, self.template_name,{
                       'provider': provider,
@@ -172,11 +173,11 @@ class ProviderLocationMaxUpdateView(View):
     # form_class = ProviderLocationMaxForm
     template_name = 'scheduler/preference_plm_update.html'
 
-    def get(self, request,**kwargs):
+    def get(self, request, **kwargs):
         pk = self.kwargs['pk']
         provider = Provider.objects.get(pk=pk)
-        plmFormset = inlineformset_factory(Provider, ProviderLocationMax,
-                                           fields=('location','provider_at_location_max_days',),
+        plmFormset = inlineformset_factory(Provider, ProviderLocationMax, form=ProviderLocationMaxForm,
+                                           fields=('provider_at_location_max_days',),
                                            can_delete=False, can_order=False, extra=0)
         formset = plmFormset(instance=provider)
 
@@ -186,11 +187,11 @@ class ProviderLocationMaxUpdateView(View):
 
         return render(request, self.template_name, {'formset':formset, 'provider':provider})
 
-    def post(self, request, *args, **kwargs):
+    def post(self, request, **kwargs):
 
         pk = self.kwargs['pk']
         provider = Provider.objects.get(pk=pk)
-        plmFormset = inlineformset_factory(Provider, ProviderLocationMax,
+        plmFormset = inlineformset_factory(Provider, ProviderLocationMax, form=ProviderLocationMaxForm,
                                            fields=('location', 'provider_at_location_max_days',),
                                            can_delete=False, can_order=False, extra=0)
         formset = plmFormset(request.POST, instance=provider)
@@ -218,36 +219,31 @@ class ProviderVacationUpdateView(View):
 
     template_name = 'scheduler/preference_vacation_update.html'
 
-    def get(self, request,**kwargs):
+    def get(self, request, **kwargs):
         pk = self.kwargs['pk']
         provider = Provider.objects.get(pk=pk)
-        plmFormset = inlineformset_factory(Provider, ProviderVacation,
-                                           fields=('vacation_date',),
-                                           can_delete=True, can_order=False, extra=10)
-        formset = plmFormset(instance=provider)
+        formset = ProviderVacationFormSet(instance=provider)
 
-        return render(request, self.template_name, {'formset':formset, 'provider':provider})
+        return render(request, self.template_name, {'formset': formset, 'provider': provider})
 
-    def post(self, request, *args, **kwargs):
+    def post(self, request, **kwargs):
 
         pk = self.kwargs['pk']
         provider = Provider.objects.get(pk=pk)
-        plmFormset = inlineformset_factory(Provider, ProviderVacation,
-                                           fields=('vacation_date',),
-                                           can_delete=True, can_order=False, extra=10)
-        formset = plmFormset(request.POST, instance=provider)
+        formset = ProviderVacationFormSet(request.POST, instance=provider)
 
         if formset.is_valid():
             formset.save()
-
-        return redirect('scheduler:preference-detail', pk=pk)
+            return redirect('scheduler:preference-detail', pk=pk)
+        else:
+            return render(request, self.template_name, {'formset': formset, 'provider': provider})
 
 
 # MAKE SCHEDULE VIEWS
 
 # TODO: Incorporate the scheduler logid
 
-def make_schedule():
+def make_schedule(start_date, end_date):
 
     locations = Location.objects.order_by('name')
     providers = Provider.objects.order_by('name_last')
@@ -256,7 +252,7 @@ def make_schedule():
 
     ## ALL OF THE SCHEDULER LOGIC HAPPENS IN HERE
 
-    schedule = False
+    schedule = 'hello'
 
     return schedule
 
@@ -264,7 +260,17 @@ def make_schedule():
 class MakeScheduleIndexView(View):
 
     template_name = 'scheduler/makeschedule_index.html'
+    form_class = SchedulerForm
 
-    def get(self, request):
-        schedule = make_schedule()
-        return render(request, self.template_name, {'schedule': schedule,})
+    def get(self, request, **kwargs):
+        return render(request, self.template_name, {'form': self.form_class})
+
+    def post(self, request, *args, **kwargs):
+        form = SchedulerForm(request.POST)
+        if form.is_valid():
+            cleaned_data = form.cleaned_data
+            schedule = make_schedule(cleaned_data['start_date'], cleaned_data['end_date'])
+            return render(request, self.template_name, {'schedule': schedule})
+        else:
+            return render(request, self.template_name, {'form': self.form_class})
+

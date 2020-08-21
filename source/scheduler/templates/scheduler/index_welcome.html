@@ -1,0 +1,23 @@
+{% extends "scheduler/base.html" %}
+
+{% block content %}
+
+<!--    <h1>Scheduler</h1>-->
+<!--    <p>Set provider and location preferences and generate a schedule.</p>-->
+
+    <br>
+
+    <h1>Welcome to the FPA Scheduler!</h1>
+    <p>Log in to get started.</p>
+
+
+    <div>
+        <br><br>
+        <p>Reference Apps (Not used)</p>
+        <ul>
+        <li><a href="{% url 'names:index' %}">Names</a></li>
+        <li><a href="{% url 'polls:index' %}">Polls</a></li>
+        </ul>
+    </div>
+
+{% endblock %}

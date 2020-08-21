@@ -1,58 +1,89 @@
 {% extends "scheduler/base.html" %}
 
+{% load auth_extras %}
+
 {% block content %}
 
-    <h1>Scheduler</h1>
-    <p>Set provider and location preferences and generate a schedule.</p>
+<!--    <h1>Scheduler</h1>-->
+<!--    <p>Set provider and location preferences and generate a schedule.</p>-->
 
-    <br>
+    {% if user.is_authenticated %}
 
-    <div class="row">
-      <div class="col-sm-4">
-        <div class="card">
-          <h5 class="card-header">Manage Providers</h5>
-          <div class="card-body">
-            <p class="card-text" style="margin-bottom:22px;">Medical provider names and the number of days they work.</p>
-            <a class="btn-lg btn-primary" role="button" href="{% url 'scheduler:provider-index' %}" >Providers</a>
+        <h2>Welcome, {{ user.get_username }}. </h2>
+
+        <br>
+
+        {% if request.user|has_group:"Scheduler Admins" %}
+
+        <div class="row">
+          <div class="col-sm-4">
+            <div class="card">
+              <h5 class="card-header">Manage Providers</h5>
+              <div class="card-body">
+                <p class="card-text" style="margin-bottom:22px;">Medical provider names and the number of days they work.</p>
+                <a class="btn-lg btn-primary" role="button" href="{% url 'scheduler:provider-index' %}" >Providers</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="card">
+              <h5 class="card-header">Manage Locations</h5>
+              <div class="card-body">
+                <p class="card-text" style="margin-bottom:22px;">Locations for which providers should be scheduled.</p>
+                <a class="btn-lg btn-primary" role="button" href="{% url 'scheduler:location-index' %}">Locations</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="card">
+              <h5 class="card-header">Manage Preferences</h5>
+                <div class="card-body">
+
+                <p class="card-text" style="margin-bottom:22px;">Provider location preferences and vacation days.</p>
+                <a class="btn-lg btn-primary" role="button" href="{% url 'scheduler:preference-index' %}">Preferences</a>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="col-sm-4">
-        <div class="card">
-          <h5 class="card-header">Manage Locations</h5>
-          <div class="card-body">
-            <p class="card-text" style="margin-bottom:22px;">Locations for which providers should be scheduled.</p>
-            <a class="btn-lg btn-primary" role="button" href="{% url 'scheduler:location-index' %}">Locations</a>
+
+        <br>
+
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="card">
+                <h5 class="card-header">Make Schedule</h5>
+              <div class="card-body">
+                <p class="card-text" style="margin-bottom:22px;">Generate a schedule based on the settings above.</p>
+                <a class="btn-lg btn-primary" role="button" href="{% url 'scheduler:makeschedule-index' %}" >Make Schedule</a>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="col-sm-4">
-        <div class="card">
-          <h5 class="card-header">Manage Preferences</h5>
-            <div class="card-body">
 
-            <p class="card-text" style="margin-bottom:22px;">Provider location preferences and vacation days.</p>
-            <a class="btn-lg btn-primary" role="button" href="{% url 'scheduler:preference-index' %}">Preferences</a>
+        {% elif request.user|has_group:"Providers" %}
+
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="card">
+              <h5 class="card-header">Manage Preferences</h5>
+                <div class="card-body">
+
+                <p class="card-text" style="margin-bottom:22px;">Provider location preferences and vacation days.</p>
+                <a class="btn-lg btn-primary" role="button" href="{% url 'scheduler:preference-index' %}">Preferences</a>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
 
-    <br>
+        {% endif %}
 
-    <div class="row">
-      <div class="col-sm-12">
-        <div class="card">
-            <h5 class="card-header">Make Schedule</h5>
-          <div class="card-body">
-            <p class="card-text" style="margin-bottom:22px;">Generate a schedule based on the settings above.</p>
-            <a class="btn-lg btn-primary" role="button" href="{% url 'scheduler:makeschedule-index' %}" >Make Schedule</a>
-          </div>
-        </div>
-      </div>
-    </div>
+    {% else %}
 
-    <br><br>
+    <h1>Welcome to the FPA Scheduler!</h1>
+    <p>Log in to get started.</p>
+
+    {% endif %}
+
     <div>
         <br><br>
         <p>Reference Apps (Not used)</p>

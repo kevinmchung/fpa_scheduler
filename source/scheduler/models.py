@@ -27,10 +27,11 @@ class Location(models.Model):
 
 class ProviderVacation(models.Model):
 	provider = models.ForeignKey(Provider, on_delete=models.CASCADE)
-	vacation_date = models.DateField()
+	start_date = models.DateField()
+	end_date = models.DateField()
 
 	def __str__(self):
-		return "{} | {}".format(self.provider,self.vacation_date)
+		return "{} | {} - {}".format(self.provider, self.start_date, self.end_date)
 
 
 class ProviderLocationMax(models.Model):

@@ -1,29 +1,62 @@
 {% extends "scheduler/base.html" %}
 
+{% load static %}
+{% load crispy_forms_tags %}
+
 {% block breadcrumb_page %}
-    <li class="breadcrumb-item"><a href="{% url 'scheduler:preference-index' %}"}>Preference</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'scheduler:preference-index' %}"}>Preferences</a></li>
     <li class="breadcrumb-item active">Edit</li>
 {% endblock %}
 
 {% block content %}
 
-    <h1>Preferences - Provider Vacation Days</h1>
+    <h1>Preferences - Vacation Days</h1>
     <br>
 
 
     <form method="post">
+        <div id="form_set">
+            {% csrf_token %}
+            {{ formset.management_form }}
+            {% for form in formset %}
+                {% for key, value in form.non_field_errors.items %}
+                    <div class="alert alert-danger">
+                        <strong>{{ value|striptags }}</strong>
+                    </div>
+                {% endfor %}
+                {% for key, value in form.errors.items %}
+                    <div class="alert alert-danger">
+                        <strong>{{ value|striptags }}</strong>
+                    </div>
+                {% endfor %}
+                {% for hidden in form.hidden_fields %}
+                    {{ hidden }}
+                {% endfor %}
 
-        {% csrf_token %}
-        {{ formset.management_form }}
-        {% for form in formset %}
-            {{ form }}
+                {% crispy form %}
+            <br>
+            {% endfor %}
+        </div>
+
         <br>
-        {% endfor %}
 
-        <br>
-
-        <input type="submit" value="Update">
+        <div id="empty_form" style="display:none">
+            <table class='no_error'>
+                {% crispy formset.empty_form %}
+            </table>
+        </div>
+        <input type="button" class="btn btn-primary" value="New Vacation" id="add_more">
+        <input class="btn btn-primary" type="submit" value="Update">
     </form>
 
+<script>
+    $('#add_more').click(function() {
+        var form_idx = $('#id_providervacation_set-TOTAL_FORMS').val();
+        $('#form_set').append($('#empty_form').html().replace(/__prefix__/g, form_idx));
+        $('#id_providervacation_set-TOTAL_FORMS').val(parseInt(form_idx) + 1);
+    });
+</script>
 
 {% endblock %}
+
+

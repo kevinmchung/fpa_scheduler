@@ -1,5 +1,6 @@
 {% extends "scheduler/base.html" %}
 {% load static %}
+{% load crispy_forms_tags %}
 
 {% block breadcrumb_page %}
     <li class="breadcrumb-item" active><a href="{% url 'scheduler:location-index' %}"}>Location</a></li>
@@ -54,11 +55,7 @@
     <div class="collapse" id="collapseExample">
       <div class="card card-body">
           <h3>Add a Location</h3><br>
-          <form action="" method="post">
-          {% csrf_token %}
-          {{ form.as_p }}
-          <input class="btn btn-primary" type="submit" value="Add">
-          </form>
+          {% crispy form %}
       </div>
     </div>
 

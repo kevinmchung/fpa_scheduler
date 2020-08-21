@@ -14,8 +14,8 @@
 
         <h3>{{ object }} ( {{ object.abbrev }} )</h3>
         <br>
-        <p class="text-danger">[ THIS CANNOT BE UNDONE ]</p>
-    <input type="submit" value="Confirm Delete">
+        <p class="alert alert-danger">THIS CANNOT BE UNDONE</p>
+    <input class="btn btn-primary btn-delete" type="submit" value="Confirm Delete">
     </form>
     <br>
     <a href="{% url 'scheduler:provider-index' %}"}>Back to Provider List</a>

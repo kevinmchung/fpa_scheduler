@@ -47,7 +47,7 @@ class ProviderForm(ModelForm):
             'days_per_week': _('Working Days Per Week'),
         }
         help_texts = {
-            'abbrev': _('(3 letters)'),
+            'abbrev': _('3 letters'),
         }
 
     def clean_abbrev(self):
@@ -84,7 +84,11 @@ class LocationForm(ModelForm):
                 css_class='row',
             ),
             Div(
-                Div('weekend'),
+                Div('weekend', css_class='col-sm-4'),
+                css_class='row',
+            ),
+            Div(
+                Div('num_providers_weekend', css_class='col-sm-4'),
                 css_class='row',
             ),
         )
@@ -100,10 +104,12 @@ class LocationForm(ModelForm):
             'provider_min': _('Min Number of Providers Needed'),
             'provider_max': _('Max Number of Providers Needed'),
             'weekend': _('Weekend Coverage Needed'),
+            'num_providers_weekend': _('Number of Providers on Weekends'),
         }
 
         help_texts = {
-            'abbrev': _('(5 letters)'),
+            'abbrev': _('5 letters'),
+            'num_providers_weekend': _('Enter 0 if no weekend coverage needed')
         }
 
     def clean_abbrev(self):
@@ -141,7 +147,7 @@ class ProviderVacationForm(ModelForm):
         end_date = cleaned_data.get('end_date')
 
         if start_date and end_date:
-            if end_date <= start_date:
+            if end_date < start_date:
                 self.add_error('end_date', _('End date should not be before start date'))
 
         return cleaned_data

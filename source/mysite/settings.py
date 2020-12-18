@@ -177,5 +177,5 @@ STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 ]
 
-# Redirect user after logni
+# Redirect user after login
 LOGIN_REDIRECT_URL = "/"

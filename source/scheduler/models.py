@@ -20,6 +20,7 @@ class Location(models.Model):
 	provider_min = models.PositiveSmallIntegerField(default=0)
 	provider_max = models.PositiveSmallIntegerField(default=0)
 	weekend = models.BooleanField()
+	num_providers_weekend = models.PositiveSmallIntegerField(default=0)
 
 	def __str__(self):
 		return "{}".format(self.name)

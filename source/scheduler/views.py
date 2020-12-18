@@ -1,15 +1,16 @@
-from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseRedirect # noqa: 401
-from django.shortcuts import get_object_or_404, render, redirect
-from django.urls import reverse
+import os
+
+from django.conf import settings
+from django.http import HttpResponse, HttpResponseRedirect, Http404 # noqa: 401
+from django.shortcuts import render, redirect
 from django.views import generic, View
-from django.views.generic.edit import UpdateView
 
 from .models import Provider, Location, ProviderVacation, ProviderLocationMax
 from .forms import ProviderForm, LocationForm, ProviderLocationMaxForm, ProviderVacationFormSet, SchedulerForm
-from django.forms import modelformset_factory, inlineformset_factory
+from django.forms import inlineformset_factory
 from django.urls import reverse_lazy
 
+from source.modules import schedule_generator, excel_writer
 
 class IndexView(generic.ListView):
     template_name = 'scheduler/index.html'
@@ -192,21 +193,19 @@ class ProviderLocationMaxUpdateView(View):
         pk = self.kwargs['pk']
         provider = Provider.objects.get(pk=pk)
         plmFormset = inlineformset_factory(Provider, ProviderLocationMax, form=ProviderLocationMaxForm,
-                                           fields=('location', 'provider_at_location_max_days',),
+                                           fields=('provider_at_location_max_days',),
                                            can_delete=False, can_order=False, extra=0)
         formset = plmFormset(request.POST, instance=provider)
 
         #plmFormset = modelformset_factory(ProviderLocationMax, fields=('location', 'provider_at_location_max_days',))
         #formset = plmFormset(queryset=ProviderLocationMax.objects.filter(provider_id=pk))
 
+        print(formset)
         if formset.is_valid():
             formset.save()
-            #instances = formset.save(commit=False)
-            #for i in instances:
-            #    i.provider_id = pk
-            #    i.save()
-
-        return redirect('scheduler:preference-detail', pk=pk)
+            return redirect('scheduler:preference-detail', pk=pk)
+        else:
+            return render(request, self.template_name, {'formset': formset, 'provider': provider})
 
 
 
@@ -241,20 +240,24 @@ class ProviderVacationUpdateView(View):
 
 # MAKE SCHEDULE VIEWS
 
-# TODO: Incorporate the scheduler logid
+# TODO: Incorporate the scheduler logic
 
 def make_schedule(start_date, end_date):
 
-    locations = Location.objects.order_by('name')
-    providers = Provider.objects.order_by('name_last')
-    plms = ProviderLocationMax.objects.all()
-    vacations = ProviderVacation.objects.order_by('vacation_date')
+
+    models = {'locations': Location.objects.order_by('name'),
+            'providers': Provider.objects.order_by('name_last'),
+            'plms': ProviderLocationMax.objects.all(),
+            'vacations': ProviderVacation.objects.order_by('start_date')}
 
     ## ALL OF THE SCHEDULER LOGIC HAPPENS IN HERE
 
-    schedule = 'hello'
+    providers, offices, weekend_offices = schedule_generator.convert_models(models)
 
-    return schedule
+    schedule = schedule_generator.generate_schedule(providers, offices, weekend_offices, [], start_date, end_date)
+    filename = excel_writer.make_spreadsheet(providers, offices, schedule, start_date, end_date)
+
+    return schedule, filename
 
 
 class MakeScheduleIndexView(View):
@@ -269,8 +272,16 @@ class MakeScheduleIndexView(View):
         form = SchedulerForm(request.POST)
         if form.is_valid():
             cleaned_data = form.cleaned_data
-            schedule = make_schedule(cleaned_data['start_date'], cleaned_data['end_date'])
-            return render(request, self.template_name, {'schedule': schedule})
+            schedule, filename = make_schedule(cleaned_data['start_date'], cleaned_data['end_date'])
+            return render(request, self.template_name, {'schedule_filename': filename})
         else:
             return render(request, self.template_name, {'form': self.form_class})
 
+def download_schedule(request, path):
+    file_path = os.path.join('./scheduler/static/files', path)
+    if os.path.exists(file_path):
+        with open(file_path, 'rb') as fh:
+            response = HttpResponse(fh.read(), content_type="application/vnd.ms-excel")
+            response['Content-Disposition'] = 'inline; filename=' + os.path.basename(file_path)
+            return response
+    raise Http404

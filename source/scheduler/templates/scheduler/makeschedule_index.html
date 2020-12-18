@@ -4,12 +4,12 @@
 
 {% block content %}
 
-    <h1>Schedule</h1>
+    <h1>Make Schedule</h1>
 
     <br>
 
-    {% if schedule %}
-        {{ schedule }}
+    {% if schedule_filename %}
+        <a href="{% url 'scheduler:download' schedule_filename %}">Download Schedule</a>
     {% elif form %}
         {% csrf_token %}
         {% crispy form %}

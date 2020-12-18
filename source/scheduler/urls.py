@@ -25,4 +25,6 @@ urlpatterns = [
 
     path('makeschedule', views.MakeScheduleIndexView.as_view(), name='makeschedule-index'),
 
+    path('download/<str:path>', views.download_schedule, name='download'),
+
 ]
